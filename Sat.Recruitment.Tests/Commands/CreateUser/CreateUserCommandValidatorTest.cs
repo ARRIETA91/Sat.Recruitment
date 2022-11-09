@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sat.Recruitment.Core.Commands.CreateUser;
+﻿using Sat.Recruitment.Core.Commands.CreateUser;
 using System.Linq;
+using Xunit;
 
 namespace Sat.Recruitment.Test.Commands.CreateUser
 {
-    [TestClass]
     public class CreateUserCommandValidatorTest
     {
         private readonly CreateUserCommandValidator _validator;
@@ -14,7 +13,7 @@ namespace Sat.Recruitment.Test.Commands.CreateUser
             _validator = new CreateUserCommandValidator();
         }
 
-        [TestMethod]
+        [Fact]
         public void Handle_CreateUser_With_Name_Is_Required()
         {
             //arrange
@@ -35,11 +34,11 @@ namespace Sat.Recruitment.Test.Commands.CreateUser
             var result = _validator.Validate(command);
 
             //assert
-            Assert.IsFalse(result.IsValid);
-            Assert.AreEqual("The name is required", result.Errors.ElementAt(0).ErrorMessage);
+            Assert.False(result.IsValid);
+            Assert.Equal("The name is required", result.Errors.ElementAt(0).ErrorMessage);
         }
 
-        [TestMethod]
+        [Fact]
         public void Handle_CreateUser_With_Adress_Is_Required()
         {
             //arrange
@@ -60,11 +59,11 @@ namespace Sat.Recruitment.Test.Commands.CreateUser
             var result = _validator.Validate(command);
 
             //assert
-            Assert.IsFalse(result.IsValid);
-            Assert.AreEqual("The address is required", result.Errors.ElementAt(0).ErrorMessage);
+            Assert.False(result.IsValid);
+            Assert.Equal("The address is required", result.Errors.ElementAt(0).ErrorMessage);
         }
 
-        [TestMethod]
+        [Fact]
         public void Handle_CreateUser_With_Email_Is_Required()
         {
             //arrange
@@ -85,11 +84,11 @@ namespace Sat.Recruitment.Test.Commands.CreateUser
             var result = _validator.Validate(command);
 
             //assert
-            Assert.IsFalse(result.IsValid);
-            Assert.AreEqual("The email is required", result.Errors.ElementAt(0).ErrorMessage);
+            Assert.False(result.IsValid);
+            Assert.Equal("The email is required", result.Errors.ElementAt(0).ErrorMessage);
         }
 
-        [TestMethod]
+        [Fact]
         public void Handle_CreateUser_With_Email_Is_Invalid()
         {
             //arrange
@@ -110,11 +109,11 @@ namespace Sat.Recruitment.Test.Commands.CreateUser
             var result = _validator.Validate(command);
 
             //assert
-            Assert.IsFalse(result.IsValid);
-            Assert.AreEqual("The email is not valid", result.Errors.ElementAt(0).ErrorMessage);
+            Assert.False(result.IsValid);
+            Assert.Equal("The email is not valid", result.Errors.ElementAt(0).ErrorMessage);
         }
 
-        [TestMethod]
+        [Fact]
         public void Handle_CreateUser_With_Phone_Is_Required()
         {
             //arrange
@@ -135,8 +134,8 @@ namespace Sat.Recruitment.Test.Commands.CreateUser
             var result = _validator.Validate(command);
 
             //assert
-            Assert.IsFalse(result.IsValid);
-            Assert.AreEqual("The phone is required", result.Errors.ElementAt(0).ErrorMessage);
+            Assert.False(result.IsValid);
+            Assert.Equal("The phone is required", result.Errors.ElementAt(0).ErrorMessage);
         }
     }
 }

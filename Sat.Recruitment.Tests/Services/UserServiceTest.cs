@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Sat.Recruitment.Core.Commands.CreateUser;
 using Sat.Recruitment.Core.Commons;
@@ -10,10 +9,10 @@ using Sat.Recruitment.Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace Sat.Recruitment.Test.Services
 {
-    [TestClass]
     public class UserServiceTest
     {
         private readonly Mock<IMapper> _mapper = new Mock<IMapper>();
@@ -25,7 +24,7 @@ namespace Sat.Recruitment.Test.Services
             _userService = new UserService(_userRepository.Object, _mapper.Object);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task UserService_CreateUser_Return_Success()
         {
             //arrange
@@ -58,12 +57,11 @@ namespace Sat.Recruitment.Test.Services
             var result = await _userService.CreateUser(user);
 
             //assert
-            Assert.IsTrue(result.IsSuccess);
-            Assert.IsNotNull((result as Result<CreateUserRequest>).Data);
+            Assert.True(result.IsSuccess);
+            Assert.NotNull((result as Result<CreateUserRequest>).Data);
         }
 
-        
-        [TestMethod]
+        [Fact]
         public async Task UserService_CreateUser_When_AlreadyExists_Return_No_Success()
         {
             //arrange
@@ -82,11 +80,11 @@ namespace Sat.Recruitment.Test.Services
             var result = await _userService.CreateUser(user);
 
             //assert
-            Assert.IsFalse(result.IsSuccess);
-            Assert.AreEqual(result.Message, "User is duplicated");
+            Assert.False(result.IsSuccess);
+            Assert.Equal("User is duplicated", result.Message);
         }
 
-        [TestMethod]
+        [Fact]
         public async Task UserService_CreateUser_Return_InternalServerError()
         {
             //arrange
@@ -105,12 +103,11 @@ namespace Sat.Recruitment.Test.Services
             var result = await _userService.CreateUser(user);
 
             //assert
-            Assert.IsFalse(result.IsSuccess);
-            Assert.AreEqual(result.Message, "Internal Server Error");
+            Assert.False(result.IsSuccess);
+            Assert.Equal("Internal Server Error", result.Message);
         }
 
-
-        [TestMethod]
+        [Fact]
         public async Task UserServices_UserExists_Return_True()
         {
             //arrange
@@ -129,11 +126,10 @@ namespace Sat.Recruitment.Test.Services
             var result = await _userService.ExistsUser(user);
 
             //assert
-            Assert.IsTrue(result);
+            Assert.True(result);
         }
 
-        
-        [TestMethod]
+        [Fact]
         public void UserService_CalculateMoney_By_UserType()
         {
             //init
@@ -175,14 +171,14 @@ namespace Sat.Recruitment.Test.Services
             });
 
             //assert
-            Assert.AreEqual(UserType.Normal, usersList[0].UserType);
-            Assert.AreEqual(UserType.SuperUser, usersList[3].UserType);
-            Assert.AreEqual(UserType.Premium, usersList[4].UserType);
-            Assert.AreEqual(Convert.ToDecimal(123.20), usersList[0].Money);
-            Assert.AreEqual(Convert.ToDecimal(162), usersList[1].Money);
-            Assert.AreEqual(Convert.ToDecimal(100), usersList[2].Money);
-            Assert.AreEqual(Convert.ToDecimal(240), usersList[3].Money);
-            Assert.AreEqual(Convert.ToDecimal(1200), usersList[4].Money);
+            Assert.Equal(UserType.Normal, usersList[0].UserType);
+            Assert.Equal(UserType.SuperUser, usersList[3].UserType);
+            Assert.Equal(UserType.Premium, usersList[4].UserType);
+            Assert.Equal(Convert.ToDecimal(123.20), usersList[0].Money);
+            Assert.Equal(Convert.ToDecimal(162), usersList[1].Money);
+            Assert.Equal(Convert.ToDecimal(100), usersList[2].Money);
+            Assert.Equal(Convert.ToDecimal(240), usersList[3].Money);
+            Assert.Equal(Convert.ToDecimal(1200), usersList[4].Money);
         }
     }
 }
