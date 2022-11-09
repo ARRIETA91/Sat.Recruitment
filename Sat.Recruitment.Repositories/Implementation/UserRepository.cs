@@ -18,17 +18,11 @@ namespace Sat.Recruitment.Repositories.Implementation
             _settingOptions = settingOptions;
         }
 
-        public async Task<User> Add(User user)
+        public async Task Add(User user)
         {
             string newUser = $"{user.Name},{user.Email},{user.Phone},{user.Address},{Enum.GetName(typeof(UserType), user.UserType)},{user.Money}";
-
             var path = Directory.GetCurrentDirectory() + _settingOptions.CurrentValue.CurrentFile;
-
-            var append = File.AppendAllTextAsync(path, newUser + Environment.NewLine);
-
-            await append;
-
-            return user;
+            await File.AppendAllTextAsync(path, newUser + Environment.NewLine);
         }
 
         public async Task<IEnumerable<User>> GetUsers()

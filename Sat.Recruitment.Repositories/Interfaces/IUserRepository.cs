@@ -7,6 +7,6 @@ namespace Sat.Recruitment.Repositories.Interfaces
     public interface IUserRepository
     {
         Task<IEnumerable<User>> GetUsers();
-        Task<User> Add(User user);
+        Task Add(User user);
     }
 }

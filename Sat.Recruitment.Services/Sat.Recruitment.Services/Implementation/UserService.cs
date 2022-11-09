@@ -31,15 +31,13 @@ namespace Sat.Recruitment.Services.Services
             try
             {
                 if (await ExistsUser(user))
-                {
                     return new Result<CreateUserRequest> { IsSuccess = false, Message = "User is duplicated" };
-                }
 
-                var usertype = user.GetUserType();
-                usertype.CalculateMoney();
-                await _userRepository.Add(usertype);
+                var userType = user.GetUserType();
+                userType.CalculateMoney();
+                await _userRepository.Add(userType);
 
-                var userRequest = _mapper.Map<User, CreateUserRequest>(usertype);
+                var userRequest = _mapper.Map<User, CreateUserRequest>(userType);
                 return new Result<CreateUserRequest> { IsSuccess = true, Data = userRequest, Message = "User Created" };
             }
             catch (Exception)
